@@ -1,8 +1,8 @@
-const field_size_px = 700;
+const field_size_px = Math.floor(Math.min(window.screen.width, window.screen.height) * 0.7);
 const field_size_cells = 4;
-const cell_margin = 7;
+const cell_margin = 7 / 700 * field_size_px;
 const start_numbers_count = 2;
-const font_size = 2;
+const font_size = 2 / 700 * field_size_px;
 
 background = {
     '2': { color: '#eee4da', font_size: 55 },
@@ -94,7 +94,7 @@ function draw() {
                 ctx.fillStyle = background[field[i][j]]?.color || background['super']?.color;
                 roundRect(ctx, box_size * j + cell_margin, box_size * i + cell_margin,
                     box_size - 2 * cell_margin, box_size - 2 * cell_margin,
-                    10, true, false)
+                    1 / 45 * field_size_px, true, false)
                 ctx.font = `${(background[field[i][j]]?.font_size || background['super'].font_size) * font_size}px sans`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -105,7 +105,7 @@ function draw() {
                 ctx.fillStyle = 'rgba(238, 228, 218, 0.35)';
                 roundRect(ctx, box_size * j + cell_margin, box_size * i + cell_margin,
                     box_size - 2 * cell_margin, box_size - 2 * cell_margin,
-                    10, true, false)
+                    1 / 45 * field_size_px, true, false)
 
             }
         }
@@ -213,7 +213,7 @@ function moveRight() {
                     if (cj - 1 != j && field[i][cj] != field[i][j]) {
                         field[i][cj - 1] = field[i][j];
                         field[i][j] = undefined;
-                        is_any_tile_move = false;
+                        is_any_tile_move = true;
                     }
                     else if (field[i][cj] == field[i][j]) {
                         field[i][cj] = '' + 2 * (+field[i][j]);
