@@ -1,4 +1,4 @@
-const field_size_px = Math.floor(Math.min(window.screen.width, window.screen.height) * 0.7);
+const field_size_px = Math.floor(Math.min(window.innerWidth, window.innerHeight) * .8);
 const field_size_cells = 4;
 const cell_margin = 7 / 700 * field_size_px;
 const start_numbers_count = 2;
@@ -274,8 +274,8 @@ container.addEventListener('swipe', function (event) {
     console.log(event);
 //   if(event.)
     const dir = event.detail.directions;
-    move_list = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'][1 * dir.top + 2 * dir.right + 3 * dir.bottom];
-    move(move_list);
+    const move_direction = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'][1 * dir.top + 2 * dir.right + 3 * dir.bottom];
+    move(move_direction);
 });
 
 for (let i = 0; i < start_numbers_count; ++i) {
