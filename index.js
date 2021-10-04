@@ -265,8 +265,26 @@ function moveDown() {
 }
 
 document.addEventListener('keydown', (event) => {
+    move(event.code);
+})
+
+const container = document;
+const listener = SwipeListener(container);
+container.addEventListener('swipe', function (event) {
+    console.log(event);
+//   if(event.)
+    const dir = event.detail.directions;
+    move_list = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'][1 * dir.top + 2 * dir.right + 3 * dir.bottom];
+    move(move_list);
+});
+
+for (let i = 0; i < start_numbers_count; ++i) {
+    addNumber();
+}
+
+function move(direction) {
     let need_new_number = false;
-    switch (event.code) {
+    switch (direction) {
         case 'ArrowLeft':
             need_new_number = moveLeft();
             break;
@@ -287,11 +305,5 @@ document.addEventListener('keydown', (event) => {
         addNumber();
         draw();
     }
-})
-
-
-
-for (let i = 0; i < start_numbers_count; ++i) {
-    addNumber();
 }
 
