@@ -6,6 +6,17 @@ canvas {
     margin-right: auto
 }
 
+.preview {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center
+}
+
 body {
     overscroll-behavior: contain;
+}
+
+.preview {
+    display: block
 }

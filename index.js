@@ -79,7 +79,7 @@ function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
 }
 
 function draw() {
-    var canvas = document.getElementById('game_canvas');
+    var canvas = document.querySelector('.game_canvas');
     canvas.width = field_size_px;
     canvas.height = field_size_px;
     var ctx = canvas.getContext('2d');
@@ -100,8 +100,7 @@ function draw() {
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = 'black';
                 ctx.fillText(`${field[i][j]}`, box_size * j + box_size / 2, box_size * i + box_size / 2);
-            }
-            else {
+            } else {
                 ctx.fillStyle = 'rgba(238, 228, 218, 0.35)';
                 roundRect(ctx, box_size * j + cell_margin, box_size * i + cell_margin,
                     box_size - 2 * cell_margin, box_size - 2 * cell_margin,
@@ -144,8 +143,7 @@ function moveLeft() {
                         field[i][cj + 1] = field[i][j];
                         field[i][j] = undefined;
                         is_any_tile_move = true;
-                    }
-                    else if (field[i][cj] == field[i][j]) {
+                    } else if (field[i][cj] == field[i][j]) {
                         field[i][cj] = '' + 2 * (+field[i][j]);
                         field[i][j] = undefined;
                         is_any_tile_move = true;
@@ -179,8 +177,7 @@ function moveUp() {
                         field[ci + 1][j] = field[i][j];
                         field[i][j] = undefined;
                         is_any_tile_move = true;
-                    }
-                    else if (field[ci][j] == field[i][j]) {
+                    } else if (field[ci][j] == field[i][j]) {
                         field[ci][j] = '' + 2 * (+field[i][j]);
                         field[i][j] = undefined;
                         is_any_tile_move = true;
@@ -214,8 +211,7 @@ function moveRight() {
                         field[i][cj - 1] = field[i][j];
                         field[i][j] = undefined;
                         is_any_tile_move = true;
-                    }
-                    else if (field[i][cj] == field[i][j]) {
+                    } else if (field[i][cj] == field[i][j]) {
                         field[i][cj] = '' + 2 * (+field[i][j]);
                         field[i][j] = undefined;
                         is_any_tile_move = true;
@@ -249,8 +245,7 @@ function moveDown() {
                         field[ci - 1][j] = field[i][j];
                         field[i][j] = undefined;
                         is_any_tile_move = true;
-                    }
-                    else if (field[ci][j] == field[i][j]) {
+                    } else if (field[ci][j] == field[i][j]) {
                         field[ci][j] = '' + 2 * (+field[i][j]);
                         field[i][j] = undefined;
                         is_any_tile_move = true;
@@ -272,7 +267,7 @@ const container = document;
 const listener = SwipeListener(container);
 container.addEventListener('swipe', function (event) {
     console.log(event);
-//   if(event.)
+    //   if(event.)
     const dir = event.detail.directions;
     const move_direction = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'][1 * dir.top + 2 * dir.right + 3 * dir.bottom];
     move(move_direction);
@@ -281,6 +276,48 @@ container.addEventListener('swipe', function (event) {
 for (let i = 0; i < start_numbers_count; ++i) {
     addNumber();
 }
+
+const preview = document.querySelector('.preview');
+const button = document.querySelector('.preview_button');
+const input = document.querySelector('.twitch_name');
+const canvas_div = document.querySelector('.game');
+
+
+
+button.addEventListener('click', (event) => {
+    const channel_name = input.value.trim();
+
+    canvas_div.hidden = false;
+    preview.style.display = 'none';
+
+
+    if (channel_name !== '') {
+        console.log()
+        const client = new tmi.Client({channels: [ channel_name ]});
+        client.on('message', (channel, tags, message, self) => {
+            for (let x of ['→', 'right', 'вправо', 'право']) {
+                if (message.includes(x))
+                    return move('ArrowRight')
+            }
+            for (let x of ['↑', 'up', 'top', 'верх', 'вверх']) {
+                if (message.includes(x))
+                    return move('ArrowUp')
+            }
+            for (let x of ['←', 'left', 'влево', 'лево']) {
+                if (message.includes(x))
+                    return move('ArrowLeft')
+            }
+            for (let x of ['↓', 'down', 'botton', 'вниз', 'низ']) {
+                if (message.includes(x))
+                    return move('ArrowDown')
+            }
+        });
+        client.connect().catch(console.error);
+    }
+    draw();
+})
+
+
 
 function move(direction) {
     let need_new_number = false;
@@ -306,4 +343,3 @@ function move(direction) {
         draw();
     }
 }
-
