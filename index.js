@@ -307,7 +307,7 @@ button.addEventListener('click', (event) => {
                 if (message.includes(x))
                     return move('ArrowLeft')
             }
-            for (let x of ['↓', 'down', 'botton', 'вниз', 'низ']) {
+            for (let x of ['↓', 'down', 'bottom', 'вниз', 'низ']) {
                 if (message.includes(x))
                     return move('ArrowDown')
             }
