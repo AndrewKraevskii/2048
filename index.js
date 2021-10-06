@@ -4,6 +4,24 @@ const cell_margin = 7 / 700 * field_size_px;
 const start_numbers_count = 2;
 const font_size = 2 / 700 * field_size_px;
 
+const preview = document.querySelector('.preview');
+const button = document.querySelector('.preview_button');
+const input = document.querySelector('.twitch_name');
+const canvas_div = document.querySelector('.game');
+
+function set_input_to_channel_name() {
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    const channel_name = urlParams.get('q');
+    console.log(channel_name);
+    if (channel_name) {
+        input.value = channel_name;
+    }
+}
+set_input_to_channel_name();
+
+
 background = {
     '2': { color: '#eee4da', font_size: 55 },
     '4': { color: '#eee1c9', font_size: 55 },
@@ -277,10 +295,7 @@ for (let i = 0; i < start_numbers_count; ++i) {
     addNumber();
 }
 
-const preview = document.querySelector('.preview');
-const button = document.querySelector('.preview_button');
-const input = document.querySelector('.twitch_name');
-const canvas_div = document.querySelector('.game');
+
 
 
 
@@ -293,22 +308,23 @@ button.addEventListener('click', (event) => {
 
     if (channel_name !== '') {
         console.log()
-        const client = new tmi.Client({channels: [ channel_name ]});
+        const client = new tmi.Client({ channels: [channel_name] });
         client.on('message', (channel, tags, message, self) => {
+            const lower = message.toLowerCase();
             for (let x of ['→', 'right', 'вправо', 'право']) {
-                if (message.includes(x))
+                if (lower.includes(x))
                     return move('ArrowRight')
             }
             for (let x of ['↑', 'up', 'top', 'верх', 'вверх']) {
-                if (message.includes(x))
+                if (lower.includes(x))
                     return move('ArrowUp')
             }
             for (let x of ['←', 'left', 'влево', 'лево']) {
-                if (message.includes(x))
+                if (lower.includes(x))
                     return move('ArrowLeft')
             }
             for (let x of ['↓', 'down', 'bottom', 'вниз', 'низ']) {
-                if (message.includes(x))
+                if (lower.includes(x))
                     return move('ArrowDown')
             }
         });
