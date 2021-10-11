@@ -3,20 +3,55 @@ canvas {
     border-radius: 8px;
     display: block;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
 }
 
 .preview {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+}
+
+input[type="text"] {
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background: #fcfafa !important;
+    outline: none;
+    height: 24px;
+    width: 120px;
+    font-size: auto;
+}
+
+.preview>div>h1 {
+    font-size: 90px;
+}
+
+.preview>div>p {
+    font-size: 20px;
+}
+
+.preview>div>h1, .preview>div>p {
+    padding: 0;
+    margin: 0;
+    text-align: center;
 }
 
 body {
     overscroll-behavior: contain;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    color: #776e65;
+    background: #faf8ef;
 }
 
-.preview {
-    display: block
+.preview>button {
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 25px;
+    display: block;
+    text-align: center;
+    flex-shrink: 0;
 }

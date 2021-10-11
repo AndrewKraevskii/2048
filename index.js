@@ -5,22 +5,19 @@ const start_numbers_count = 2;
 const font_size = 2 / 700 * field_size_px;
 
 const preview = document.querySelector('.preview');
-const button = document.querySelector('.preview_button');
-const input = document.querySelector('.twitch_name');
+const button = document.querySelector('.preview > button');
+const input = document.querySelector('.preview > input');
 const canvas_div = document.querySelector('.game');
 
 function set_input_to_channel_name() {
     const queryString = window.location.search;
-    console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
     const channel_name = urlParams.get('q');
-    console.log(channel_name);
     if (channel_name) {
         input.value = channel_name;
     }
 }
 set_input_to_channel_name();
-
 
 background = {
     '2': { color: '#eee4da', font_size: 55 },
